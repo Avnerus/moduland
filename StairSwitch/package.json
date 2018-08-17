@@ -1,0 +1,11 @@
+{
+  "name": "StairSwitch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Akito van Troyer",
+  "license": "MIT",
+  "dependencies": {
+    "node-osc": "^2.1.0",
+    "serialport": "^6.2.2"
+  }
+}
