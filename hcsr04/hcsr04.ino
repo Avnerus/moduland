@@ -10,10 +10,11 @@ WiFiUDP Udp;
 const IPAddress outIp(192,168,0,2);
 const unsigned int outPort = 8000;
 
-#define TRIGGER_PIN 14
-#define ECHO_PIN 13
+#define TRIGGER_PIN 13
+#define ECHO_PIN 12
+#define MAX_DISTANCE 200
 
-const float MAX_DISTANCE = 200.0;
+const float maxDistance = MAX_DISTANCE;
 
 bool connected = false;
 int lastPing = 0;
@@ -31,7 +32,6 @@ void setup() {
       Serial.println(WiFi.status());
     }
     Serial.println("Connected to the WiFi network!"); 
-   // Udp.begin(9999);
     connected = true;
 }
 
@@ -48,21 +48,18 @@ void loop() {
         pinMode(ECHO_PIN,INPUT);
 
         int ping = (uS / US_ROUNDTRIP_CM);
+        //Serial.println(ping);
 
         if (ping > 0 && ping != lastPing) {
             lastPing = ping;
-            OSCMessage msg("/slide");
+            OSCMessage msg("/bucket");
            // msg.add("hello-slide");
-            float value = ping / MAX_DISTANCE;
-            msg.add (ping);
+            float value = ping / maxDistance;
+            msg.add (value);
             Udp.beginPacket(outIp, outPort);
             msg.send(Udp); 
             Udp.endPacket();
             msg.empty();
-            Serial.println(ping);
-            Serial.println(value);
         }
-
     }
-
 }
