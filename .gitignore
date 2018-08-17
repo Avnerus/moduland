@@ -61,3 +61,5 @@ typings/
 .next
 
 *.swp
+
+.DS_Store
